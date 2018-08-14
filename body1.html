@@ -1,0 +1,204 @@
+<html>
+	<head>
+		<title>My first Three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body onload="init()">
+            <canvas id="mainCanvas" width="400px" height="300px" ></canvas>
+          </body>
+        <script src="https://cdn.bootcss.com/three.js/88/three.js"></script>
+        <script src="http://www.wjceo.com/lib/js/controls/OrbitControls.js"></script>
+		<script>
+			function init() {
+                
+      var renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById('mainCanvas')
+      });
+      renderer.setClearColor(0x000000);
+      var scene = new THREE.Scene();
+      //阴影
+      var spotLight = new  THREE.SpotLight(0xFFFFFF);
+      spotLight.position.set(-40,60,-10);
+      scene.add(spotLight);
+
+      //创建辅助坐标轴
+ //     var axes = new THREE.AxisHelper(800);//参数设置了三条轴线的长度
+ //     scene.add(axes);
+
+
+      //添加地面网格
+//      var gridHelper = new THREE.GridHelper( 300, 10, 'red', 'gray' );
+//        gridHelper.position.y = -100;
+//        gridHelper.position.x = 0;
+ //       scene.add( gridHelper );
+
+        renderer.shadowMapEnabled = true
+      // camera
+      camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,2000);
+        camera.position.set(100,100,800);
+      scene.add(camera);
+       
+      // 材质
+      var material = new THREE.MeshDepthMaterial({
+        color: '#ddd',
+        wireframe: true
+      });
+       
+ //     drawCube(scene, material);    //立方体
+//     drawPlane(scene, material);    //平面
+   //  drawSphere(scene, material);  //球体
+
+   //添加头
+    var geometry = new THREE.CylinderGeometry( 50, 50, 170, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var cylinder = new THREE.Mesh( geometry, material );
+    scene.add( cylinder );
+
+     var child = new THREE.Bone();
+    scene.add(child)
+     //添加鼻子
+     //var nose1=new THREE.Mesh(new THREE.SphereGeometry(200, 8, 6, Math.PI / 2, Math.PI / 8,Math.PI / 6, Math.PI / 3), new THREE.MeshDepthMaterial({
+     //   color: '#db2244',
+     //   wireframe: true
+     // }))
+     // nose1.position.z= -100;
+    // scene.add(nose1)
+    //添加鼻子
+    //var nose2=new THREE.Mesh(new THREE.PlaneGeometry(50, 50,), new THREE.LineBasicMaterial({
+     //   color: '#db2244',
+    //    wireframe: true
+    //  }))
+    //  nose2.position.z=100;
+   //  nose2.rotateX(-90);
+  //  scene.add(nose2)
+    //添加鼻子
+        var geometry = new THREE.ConeGeometry( 20, 50, 0 );
+        var material = new THREE.MeshBasicMaterial( {color: '#db2244'} );
+        var cone = new THREE.Mesh( geometry, material );
+        cone.position.z=50
+        cone.position.y=20
+        scene.add( cone );
+    //添加嘴
+        var geometry = new THREE.CylinderGeometry( 20, 20,8, 32 );
+        var material = new THREE.MeshBasicMaterial( {color: 'black'} );
+        var cone = new THREE.Mesh( geometry, material );
+        cone.position.z=50
+        cone.position.y=-25
+        scene.add( cone );
+    //添加眼睛
+    var geometry = new THREE.CylinderGeometry( 5, 5, 5, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: '#db2244'} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.rotateX(90);
+    eye.position.z=50
+    eye.position.y=50
+    eye.position.x=15
+    scene.add( eye );
+     var geometry = new THREE.CylinderGeometry( 5, 5, 5, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: '#db2244'} );
+    var eye1 = new THREE.Mesh( geometry, material );
+    eye1.rotateX(90);
+    eye1.position.z=50
+    eye1.position.y=50
+    eye1.position.x=-15
+    scene.add( eye1 );
+
+    //添加身体
+    var geometry = new THREE.CylinderGeometry( 80, 80, 170, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: '#db2244'} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.position.y=-170
+    scene.add( eye );
+
+    //添加左胳膊
+    var geometry = new THREE.CylinderGeometry( 30, 30, 200, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: '#db2244'} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.rotateZ(90);
+    eye.position.x=-150
+    eye.position.y=-150
+    scene.add( eye );
+    //添加右胳膊
+    var geometry = new THREE.CylinderGeometry( 30, 30, 200, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: '#db2244'} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.rotateZ(-90);
+    eye.position.x=150
+    eye.position.y=-150
+    scene.add( eye );
+    //添加腰
+    var geometry = new THREE.CylinderGeometry( 82, 82, 30, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.position.y=-256
+    scene.add( eye );
+    //添加跨
+    var geometry = new THREE.CylinderGeometry( 80, 80, 34, 32 );
+    var material = new THREE.MeshBasicMaterial( {color:'#db2244'} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.position.y=-286
+    scene.add( eye );
+    //添加左腿
+    var geometry = new THREE.CylinderGeometry( 30, 30, 150, 32 );
+    var material = new THREE.MeshBasicMaterial( {color:0xffff00} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.position.y=-360
+    eye.position.x=-35
+    scene.add( eye );
+    //添加右腿
+    var geometry = new THREE.CylinderGeometry( 30, 30, 150, 32 );
+    var material = new THREE.MeshBasicMaterial( {color:0xffff00} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.position.y=-360
+    eye.position.x=35
+    scene.add( eye );
+    //添加左耳朵
+    var geometry = new THREE.CylinderGeometry( 20, 20, 25, 32 );
+    var material = new THREE.MeshBasicMaterial( {color:'#db2244'} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.position.x=40
+    eye.position.y=10
+    scene.add( eye );
+    //添加右耳朵
+    var geometry = new THREE.CylinderGeometry( 20, 20, 25, 32 );
+    var material = new THREE.MeshBasicMaterial( {color:'#db2244'} );
+    var eye = new THREE.Mesh( geometry, material );
+    eye.position.x=-40
+    eye.position.y=10
+    scene.add( eye );
+      // render
+      renderer.render(scene, camera);
+
+      function animate(){
+        renderer.render(scene, camera);
+        controls.update();
+        requestAnimationFrame(animate);
+        }
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      animate()
+    }
+     
+    function drawCube(scene, material) {
+      var cube = new THREE.Mesh(new THREE.CubeGeometry(1, 2, 3, 2, 2, 3), material);
+      scene.add(cube);
+    }
+     
+    function drawPlane(scene, material) {
+      var plane = new THREE.Mesh(new THREE.PlaneGeometry(2, 4), material);
+      scene.add(plane);
+    }
+     
+    function drawSphere(scene, material) {
+      var sphere = new THREE.Mesh(new THREE.SphereGeometry(100, 15, 15), material);
+//     var sphere = new THREE.Mesh(new THREE.SphereGeometry(3, 8, 6, Math.PI / 6, Math.PI / 3), material);
+//     var sphere = new THREE.Mesh(new THREE.SphereGeometry(3, 8, 6, 0, Math.PI * 2, Math.PI / 6, Math.PI / 3), material);
+//      var sphere = new THREE.Mesh(new THREE.SphereGeometry(3, 8, 6, Math.PI / 2, Math.PI, Math.PI / 6, Math.PI / 2), material);
+      scene.add(sphere);
+    }
+		</script>
+	
+</html>
